@@ -47,21 +47,28 @@ def save_eval_report(results: list, output_dir="output"):
 
         if isinstance(eval_data, dict):
             keys = [k for k in eval_data.keys() if k != "reasoning"]
+
             if "score" in eval_data and len(keys) == 1:
+                # QAEvalChain style
                 score = str(eval_data.get("score", "")).strip().lower()
                 status = "PASSED" if score in ["1", "pass", "passed"] else "FAILED"
                 pdf.set_font("DejaVu", "B", 12)
                 pdf.multi_cell(0, 10, f"Result: {status}")
             else:
+                # CriteriaEvalChain style
                 pdf.set_font("DejaVu", "B", 12)
                 pdf.multi_cell(0, 10, "Evaluation:")
                 pdf.set_font("DejaVu", "", 12)
                 for key, val in eval_data.items():
                     if key == "reasoning":
                         continue
-                    s = str(val).strip().lower()
-                    status = "PASSED" if s in ["1", "pass", "passed"] else "FAILED"
-                    pdf.multi_cell(0, 10, f"{key.capitalize()}: {status}")
+                    label = key.upper() if key not in ["value", "score"] else None
+                    if label:
+                        val_str = str(val).strip().lower()
+                        status = (
+                            "PASSED" if val_str in ["1", "pass", "passed"] else "FAILED"
+                        )
+                        pdf.multi_cell(0, 10, f"{label}: {status}")
 
         if "reasoning" in eval_data:
             pdf.set_font("DejaVu", "B", 12)
