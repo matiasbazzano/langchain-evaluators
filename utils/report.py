@@ -21,7 +21,6 @@ def save_eval_report(results: list, output_dir="output"):
 
     for i, r in enumerate(results):
         pdf.ln(5)
-
         if pdf.get_y() > 250:
             pdf.add_page()
 
@@ -33,20 +32,42 @@ def save_eval_report(results: list, output_dir="output"):
         pdf.set_font("DejaVu", "", 12)
         pdf.multi_cell(0, 10, f"{list(r['input'].values())[0]}")
 
-        pdf.set_font("DejaVu", "B", 12)
-        pdf.multi_cell(0, 10, "Expected:")
-        pdf.set_font("DejaVu", "", 12)
-        pdf.multi_cell(0, 10, f"{r['reference']}")
+        if "reference" in r:
+            pdf.set_font("DejaVu", "B", 12)
+            pdf.multi_cell(0, 10, "Expected:")
+            pdf.set_font("DejaVu", "", 12)
+            pdf.multi_cell(0, 10, f"{r['reference']}")
 
         pdf.set_font("DejaVu", "B", 12)
         pdf.multi_cell(0, 10, "Output from model:")
         pdf.set_font("DejaVu", "", 12)
         pdf.multi_cell(0, 10, f"{r['prediction']}")
 
-        score = str(r["eval"].get("score", "")).strip().lower()
-        status = "PASSED" if score in ["1", "pass", "passed"] else "FAILED"
+        eval_data = r.get("eval", {})
 
-        pdf.set_font("DejaVu", "B", 12)
-        pdf.multi_cell(0, 10, f"Result: {status}")
+        if isinstance(eval_data, dict):
+            keys = [k for k in eval_data.keys() if k != "reasoning"]
+            if "score" in eval_data and len(keys) == 1:
+                score = str(eval_data.get("score", "")).strip().lower()
+                status = "PASSED" if score in ["1", "pass", "passed"] else "FAILED"
+                pdf.set_font("DejaVu", "B", 12)
+                pdf.multi_cell(0, 10, f"Result: {status}")
+            else:
+                pdf.set_font("DejaVu", "B", 12)
+                pdf.multi_cell(0, 10, "Evaluation:")
+                pdf.set_font("DejaVu", "", 12)
+                for key, val in eval_data.items():
+                    if key == "reasoning":
+                        continue
+                    s = str(val).strip().lower()
+                    status = "PASSED" if s in ["1", "pass", "passed"] else "FAILED"
+                    pdf.multi_cell(0, 10, f"{key.capitalize()}: {status}")
+
+        if "reasoning" in eval_data:
+            pdf.set_font("DejaVu", "B", 12)
+            pdf.multi_cell(0, 10, "Reasoning:")
+            pdf.set_font("DejaVu", "", 12)
+            pdf.multi_cell(0, 10, eval_data["reasoning"])
 
     pdf.output(pdf_path)
+    print(f"✅ Report generated: {pdf_path}")

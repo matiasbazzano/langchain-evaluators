@@ -1,14 +1,14 @@
 [
   {
-    "query":"¿Cuál es la capital de Francia?",
-    "answer":"París"
+    "query": "What is the capital of France?",
+    "answer": "Paris"
   },
   {
-    "query":"¿Quién escribió Cien años de soledad?",
-    "answer":"Gabriel García Márquez"
+    "query": "Who wrote One Hundred Years of Solitude?",
+    "answer": "Gabriel García Márquez"
   },
   {
-    "query":"¿En qué año llegó el hombre a la Luna?",
-    "answer":"1969"
+    "query": "What year did man land on the Moon?",
+    "answer": "1969"
   }
 ]
