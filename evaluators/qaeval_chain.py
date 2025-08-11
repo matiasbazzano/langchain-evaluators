@@ -38,4 +38,4 @@ def run_qaeval_chain():
             }
         )
 
-    save_eval_report(results)
+    save_eval_report(results, evaluator_type="qa_eval")

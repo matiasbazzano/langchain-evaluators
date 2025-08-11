@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
-from langchain.evaluation.criteria import CriteriaEvalChain
+from langchain.evaluation.criteria import LabeledCriteriaEvalChain
 from utils.input_loader import load_inputs
 from utils.report import save_eval_report
 
@@ -22,16 +22,26 @@ def run_criteriaeval_chain():
         "conciseness": "Is the output concise without losing meaning?",
     }
 
-    evaluator = CriteriaEvalChain.from_llm(llm=llm_eval, criteria=criteria)
+    evaluator = LabeledCriteriaEvalChain.from_llm(llm=llm_eval, criteria=criteria)
     results = []
 
     for example in dataset_examples:
         input_ = example["input"]
+        reference = example["answer"]
         response = qa_chain.invoke(input_)
         prediction = response.content
 
-        eval_result = evaluator.evaluate_strings(input=input_, prediction=prediction)
+        eval_result = evaluator.evaluate_strings(
+            input=input_, prediction=prediction, reference=reference
+        )
 
-        results.append({"input": input_, "prediction": prediction, "eval": eval_result})
+        results.append(
+            {
+                "input": input_,
+                "reference": reference,
+                "prediction": prediction,
+                "eval": eval_result,
+            }
+        )
 
-    save_eval_report(results)
+    save_eval_report(results, evaluator_type="criteria_eval")

@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 
 
-def save_eval_report(results: list, output_dir="output"):
+def save_eval_report(results: list, evaluator_type: str = "auto", output_dir="output"):
     os.makedirs(output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     pdf_name = f"evaluation_report_{timestamp}.pdf"
@@ -46,29 +46,40 @@ def save_eval_report(results: list, output_dir="output"):
         eval_data = r.get("eval", {})
 
         if isinstance(eval_data, dict):
-            keys = [k for k in eval_data.keys() if k != "reasoning"]
+            pdf.set_font("DejaVu", "B", 12)
+            pdf.multi_cell(0, 10, "Evaluation:")
+            pdf.set_font("DejaVu", "", 12)
 
-            if "score" in eval_data and len(keys) == 1:
-                # QAEvalChain style
+            has_only_qa_eval_keys = evaluator_type == "qa_eval" or all(
+                k in ["score", "value", "reasoning"] for k in eval_data.keys()
+            )
+
+            if evaluator_type == "qa_eval" or has_only_qa_eval_keys:
                 score = str(eval_data.get("score", "")).strip().lower()
                 status = "PASSED" if score in ["1", "pass", "passed"] else "FAILED"
-                pdf.set_font("DejaVu", "B", 12)
-                pdf.multi_cell(0, 10, f"Result: {status}")
+                pdf.multi_cell(0, 10, f"QA Eval: {status}")
+
+            elif evaluator_type == "criteria_eval":
+                for key, val in eval_data.items():
+                    if key in ["score", "value", "reasoning"]:
+                        continue
+                    label = key.upper()
+                    val_str = str(val).strip().lower()
+                    status = (
+                        "PASSED" if val_str in ["1", "pass", "passed"] else "FAILED"
+                    )
+                    pdf.multi_cell(0, 10, f"{label}: {status}")
+
             else:
-                # CriteriaEvalChain style
-                pdf.set_font("DejaVu", "B", 12)
-                pdf.multi_cell(0, 10, "Evaluation:")
-                pdf.set_font("DejaVu", "", 12)
                 for key, val in eval_data.items():
                     if key == "reasoning":
                         continue
-                    label = key.upper() if key not in ["value", "score"] else None
-                    if label:
-                        val_str = str(val).strip().lower()
-                        status = (
-                            "PASSED" if val_str in ["1", "pass", "passed"] else "FAILED"
-                        )
-                        pdf.multi_cell(0, 10, f"{label}: {status}")
+                    label = key.upper()
+                    val_str = str(val).strip().lower()
+                    status = (
+                        "PASSED" if val_str in ["1", "pass", "passed"] else "FAILED"
+                    )
+                    pdf.multi_cell(0, 10, f"{label}: {status}")
 
         if "reasoning" in eval_data:
             pdf.set_font("DejaVu", "B", 12)
