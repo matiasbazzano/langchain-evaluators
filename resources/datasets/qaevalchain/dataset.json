@@ -1,0 +1,14 @@
+[
+  {
+    "query":"¿Cuál es la capital de Francia?",
+    "answer":"París"
+  },
+  {
+    "query":"¿Quién escribió Cien años de soledad?",
+    "answer":"Gabriel García Márquez"
+  },
+  {
+    "query":"¿En qué año llegó el hombre a la Luna?",
+    "answer":"1969"
+  }
+]
