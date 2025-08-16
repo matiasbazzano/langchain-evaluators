@@ -1,7 +1,4 @@
 def evaluator_needs_reference(evaluator_name: str) -> bool:
-    """
-    Returns whether a given evaluator requires a reference (ground truth).
-    """
     required = [
         "QAEvalChain",
         "ExactMatchStringEvaluator",
