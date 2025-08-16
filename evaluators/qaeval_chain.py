@@ -12,7 +12,7 @@ def run_qaeval_chain():
     prompt_template = PromptTemplate.from_template("{input}")
     qa_chain = prompt_template | llm_pred
 
-    dataset_examples = load_inputs()
+    dataset_examples = load_inputs("QAEvalChain")
     if not dataset_examples:
         print("❌ No data was loaded for evaluation.")
         return
@@ -38,4 +38,4 @@ def run_qaeval_chain():
             }
         )
 
-    save_eval_report(results)
+    save_eval_report(results, evaluator_type="qa_eval")
