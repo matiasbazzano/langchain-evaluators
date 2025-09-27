@@ -1,39 +1,31 @@
 from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
 from langchain.evaluation.criteria import CriteriaEvalChain
 from utils.input_loader import load_inputs
-from utils.report import save_eval_report
+from agent.agent import run_agent
 
 
 def run_criteriaeval_chain():
-    llm_pred = ChatOpenAI(model_name="gpt-4o-mini")
     llm_eval = ChatOpenAI(model_name="gpt-4o-mini")
 
-    prompt_template = PromptTemplate.from_template("{input}")
-    pred_chain = prompt_template | llm_pred
-
     criteria = {
-        "clarity": "Is the answer clear and easy to understand?",
-        "conciseness": "Is the answer brief and avoids unnecessary information?",
-        # relevance
+        "clarity": "Are the proposed test cases clear and easy to understand by other QA engineers?",
+        "completeness": "Do the test cases cover both the main functionality (happy path) and possible edge cases?",
+        "automation_ready": "Are the test cases written in a way that makes them suitable for automation scripting?",
+        "consistency": "Are the test cases consistent with common QA practices and terminology?",
     }
+
     evaluator = CriteriaEvalChain.from_llm(llm=llm_eval, criteria=criteria)
 
     dataset_examples = load_inputs("CriteriaEvalChain")
     if not dataset_examples:
-        print("❌ No data for CriteriaEvalChain.")
-        return
+        return []
 
     results = []
     for ex in dataset_examples:
         raw = ex.get("input")
-        if isinstance(raw, dict) and "input" in raw:
-            input_text = raw["input"]
-        else:
-            input_text = raw
+        input_text = raw["input"] if isinstance(raw, dict) else raw
 
-        pred_msg = pred_chain.invoke({"input": input_text})
-        prediction = getattr(pred_msg, "content", pred_msg)
+        prediction = run_agent(input_text)
 
         eval_result = evaluator.evaluate_strings(
             input=input_text,
@@ -43,9 +35,9 @@ def run_criteriaeval_chain():
         results.append(
             {
                 "input": input_text,
-                "reference": None,
                 "prediction": prediction,
                 "eval": eval_result,
             }
         )
-    save_eval_report(results, evaluator_type="criteria_eval")
+
+    return results
