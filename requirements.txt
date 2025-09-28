@@ -1,8 +1,7 @@
-langchain
-langchain-openai
-langsmith
-openai
-fpdf
+langchain>=0.2.0
+langchain-openai>=0.1.6
+langchain-experimental>=0.0.60
 pandas
-python-dotenv
 openpyxl
+python-dotenv
+wikipedia
