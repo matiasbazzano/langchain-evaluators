@@ -1,21 +1,6 @@
 input,answer,expected_result
 Write test cases for login functionality,"1. Verify login with valid username/password (happy path); 2. Verify login with invalid password (edge case); 3. Verify login with empty username (edge case)",pass
 Write test cases for logout functionality,"Check logout.",fail
-Write an automation script for login functionality,"Python Selenium script that enters username/password, clicks login, and verifies successful navigation to dashboard",pass
-Write an automation script for logout functionality,"1. Verify logout button logs out user; 2. Verify session ends.",fail
-Write test cases for password reset functionality,"1. Verify reset link is sent for valid email (happy path); 2. Verify reset fails for unregistered email (edge case); 3. Verify expired token cannot reset password (edge case)",pass
-Write test cases for search functionality,"1. Verify search returns results for valid keyword; 2. Verify empty keyword shows error (edge case); 3. Verify special characters handled gracefully (edge case)",pass
 Write an automation script for signup functionality,"Python Selenium script that fills signup form, submits, and verifies welcome message",pass
-Write test cases for signup functionality,"1. Verify user can sign up with valid email; 2. Verify weak password accepted.",fail
-Write test cases for file upload functionality,"1. Verify valid file uploads; 2. Verify unsupported file type rejected (edge case); 3. Verify large file rejected (edge case)",pass
-Write an automation script for file upload functionality,"Python Selenium script that uploads PDF file and asserts confirmation",pass
-Write test cases for profile update functionality,"1. Verify name can be updated; 2. Verify email requires verification; 3. Verify invalid phone rejected (edge case)",pass
-Write test cases for checkout functionality,"1. Verify checkout with valid credit card; 2. Verify expired card rejected (edge case); 3. Verify missing address fails (edge case)",pass
-Write test cases for search autocomplete,"1. Verify suggestions appear for keyword; 2. Verify nonsense input shows no results (edge case)",pass
-Write test cases for API login endpoint,"1. Verify 200 OK for valid credentials; 2. Verify 401 Unauthorized for invalid password (edge case); 3. Verify 400 Bad Request when missing fields (edge case)",pass
-Write test cases for multi-factor authentication,"Check OTP.",fail
-Write an automation script for multi-factor authentication,"Python Selenium script that enters username, password, OTP, and verifies dashboard",pass
-Write test cases for captcha validation,"1. Verify captcha appears on failed logins; 2. Verify correct captcha allows login; 3. Verify incorrect captcha blocks login (edge case)",pass
-Write test cases for wishlist functionality,"1. Verify item can be added; 2. Verify removing item updates wishlist; 3. Verify wishlist persists after logout (edge case)",pass
-Write test cases for error logging,"Errors are logged.",fail
-Write test cases for dark mode toggle,"1. Verify dark mode activates; 2. Verify persists after reload; 3. Verify toggle off returns to light mode",pass
+Write test cases for search functionality,"Verify search works.",fail
+Write test cases for password reset functionality,"1. Verify reset link is sent for valid email (happy path); 2. Verify reset fails for unregistered email (edge case); 3. Verify expired token cannot reset password (edge case)",
