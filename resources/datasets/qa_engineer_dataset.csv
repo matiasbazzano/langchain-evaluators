@@ -1,6 +1,45 @@
 input,answer,expected_result
-Write test cases for login functionality,"1. Verify login with valid username/password (happy path); 2. Verify login with invalid password (edge case); 3. Verify login with empty username (edge case)",pass
-Write test cases for logout functionality,"Check logout.",fail
-Write an automation script for signup functionality,"Python Selenium script that fills signup form, submits, and verifies welcome message",pass
-Write test cases for search functionality,"Verify search works.",fail
-Write test cases for password reset functionality,"1. Verify reset link is sent for valid email (happy path); 2. Verify reset fails for unregistered email (edge case); 3. Verify expired token cannot reset password (edge case)",
+Write test cases for login functionality,"### Test Cases for Login Functionality
+
+1. **Happy Path: Successful Login**
+   - Precondition: User is registered.
+   - Steps: Enter valid username and password, click login.
+   - Expected Result: User is redirected to dashboard.
+
+2. **Edge Case: Invalid Password**
+   - Steps: Enter valid username and invalid password, click login.
+   - Expected Result: Error message displayed.
+
+3. **Edge Case: Empty Username Field**
+   - Steps: Leave username empty, enter password, click login.
+   - Expected Result: Validation error shown.",pass
+Write test cases for password reset functionality,"### Test Cases for Password Reset
+
+1. **Happy Path: Valid Reset Request**
+   - Steps: Enter registered email, click reset.
+   - Expected Result: Reset email sent.
+
+2. **Edge Case: Non-Registered Email**
+   - Steps: Enter email not registered in system.
+   - Expected Result: Error message displayed.
+
+3. **Edge Case: Expired Reset Token**
+   - Steps: Attempt reset with expired token.
+   - Expected Result: Error displayed, reset denied.",pass
+Write an automation script for signup functionality,"### Automation Script: Signup Functionality (Python Selenium)
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+driver.get('https://example.com/signup')
+
+driver.find_element(By.ID, 'email').send_keys('newuser@example.com')
+driver.find_element(By.ID, 'password').send_keys('ValidPass123')
+driver.find_element(By.ID, 'submit').click()
+
+assert 'Welcome' in driver.page_source
+
+driver.quit()",pass
+Write an automation script for logout functionality,"Automate logout.",fail
+Write test cases for search functionality,"Search works.",fail
