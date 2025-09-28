@@ -1,8 +1,0 @@
-Query: What is the capital of France?
-Answer: Paris
-
-Query: Who wrote One Hundred Years of Solitude?
-Answer: Gabriel García Márquez
-
-Query: What year did man land on the Moon?
-Answer: 1969
