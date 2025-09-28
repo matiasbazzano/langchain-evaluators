@@ -1,8 +1,4 @@
-output/
 .env
 venv
 __pycache__/
 .vscode/
-DejaVuSans.pkl
-DejaVuSans.cw127.pkl
-DejaVuSans-Bold.pkl
