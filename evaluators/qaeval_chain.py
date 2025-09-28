@@ -3,10 +3,11 @@ from langchain.evaluation.qa import QAEvalChain
 from utils.input.input_loader import load_inputs
 from agents.qa_engineer_agent import run_agent
 from utils.input.helpers import extract_input
+from utils.settings.models import DEFAULT_MODEL
 
 
 def run_qaeval_chain():
-    llm_eval = ChatOpenAI(model_name="gpt-4o-mini")
+    llm_eval = ChatOpenAI(model_name=DEFAULT_MODEL)
     dataset_examples = load_inputs("QAEvalChain")
     if not dataset_examples:
         return []

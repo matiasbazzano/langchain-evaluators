@@ -2,12 +2,13 @@ from langchain_openai import ChatOpenAI
 from langchain.evaluation.criteria import CriteriaEvalChain
 from utils.input.input_loader import load_inputs
 from agents.qa_engineer_agent import run_agent
-from utils.settings.criteria import QA_ENGINEER_AGENT_CRITERIA
 from utils.input.helpers import extract_input
+from utils.settings.models import DEFAULT_MODEL
+from utils.settings.criteria import QA_ENGINEER_AGENT_CRITERIA
 
 
 def run_criteriaeval_chain():
-    llm_eval = ChatOpenAI(model_name="gpt-4o-mini")
+    llm_eval = ChatOpenAI(model_name=DEFAULT_MODEL)
     evaluator = CriteriaEvalChain.from_llm(
         llm=llm_eval, criteria=QA_ENGINEER_AGENT_CRITERIA
     )
