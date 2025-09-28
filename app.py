@@ -1,24 +1,12 @@
-import os
 from dotenv import load_dotenv
+from utils.settings.eval_selector import select_and_run_evaluation
+from utils.core.cleaner import clean_pycache
 
 load_dotenv()
 
-print("Select the evaluation you want to run:")
-print("1) QAEval")
-print("2) CriteriaEval")
+results = select_and_run_evaluation()
 
-option = input().strip()
+if results is not None:
+    print(results)
 
-match option:
-    case "1":
-        from evaluators.qaeval_chain import run_qaeval_chain
-
-        results = run_qaeval_chain()
-        print(results)
-    case "2":
-        from evaluators.criteriaeval_chain import run_criteriaeval_chain
-
-        results = run_criteriaeval_chain()
-        print(results)
-    case _:
-        print("❌ Invalid option.")
+clean_pycache()

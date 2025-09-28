@@ -3,7 +3,7 @@ from langchain.agents import create_react_agent, AgentExecutor
 from langchain_experimental.tools.python.tool import PythonREPLTool
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
-from resources.prompts import QA_AGENT_PROMPT
+from utils.settings.prompts import QA_ENGINEER_AGENT_PROMPT
 
 
 def create_agent(model_name: str = "gpt-4o-mini"):
@@ -14,7 +14,9 @@ def create_agent(model_name: str = "gpt-4o-mini"):
         PythonREPLTool(),
     ]
 
-    react_agent = create_react_agent(llm=llm, tools=tools, prompt=QA_AGENT_PROMPT)
+    react_agent = create_react_agent(
+        llm=llm, tools=tools, prompt=QA_ENGINEER_AGENT_PROMPT
+    )
     agent_executor = AgentExecutor(agent=react_agent, tools=tools, verbose=True)
     return agent_executor
 

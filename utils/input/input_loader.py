@@ -1,7 +1,7 @@
 import os
 import json
 import pandas as pd
-from utils.ground_truth import evaluator_needs_reference
+from utils.input.ground_truth import evaluator_needs_reference
 
 
 def normalize_entry(entry):
