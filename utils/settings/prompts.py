@@ -8,6 +8,10 @@ QA_ENGINEER_AGENT_PROMPT = PromptTemplate.from_template(
     - If the user asks for automation scripts, only provide automation scripts.
     - If the user asks for both, provide both but in clearly separated sections.
     - Never mix test cases and scripts unless explicitly requested.
+    - For test cases: always include both the main functionality (happy path) and relevant edge cases 
+      (e.g., invalid inputs, empty fields, timeouts, session issues, error handling).
+    - For automation scripts: write clear, syntactically correct, automation-ready code that covers 
+      both happy paths and relevant edge cases.
 
     You can use the available tools when needed.
 
