@@ -9,7 +9,7 @@ QA_ENGINEER_AGENT_PROMPT = PromptTemplate.from_template(
     - If the user asks for both, provide both but in clearly separated sections.
     - Never mix test cases and scripts unless explicitly requested.
 
-    You can use the available tools when needed (Wikipedia, Python REPL).
+    You can use the available tools when needed.
 
     You have access to the following tools:
     {tools}
