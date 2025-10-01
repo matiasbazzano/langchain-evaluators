@@ -18,7 +18,9 @@ def create_agent(model_name: str = DEFAULT_MODEL):
     react_agent = create_react_agent(
         llm=llm, tools=tools, prompt=QA_ENGINEER_AGENT_PROMPT
     )
-    agent_executor = AgentExecutor(agent=react_agent, tools=tools, verbose=True)
+    agent_executor = AgentExecutor(
+        agent=react_agent, tools=tools, verbose=True, handle_parsing_errors=True
+    )
     return agent_executor
 
 

@@ -1,45 +1,163 @@
 input,answer,expected_result
 Write test cases for login functionality,"### Test Cases for Login Functionality
 
-1. **Happy Path: Successful Login**
-   - Precondition: User is registered.
-   - Steps: Enter valid username and password, click login.
-   - Expected Result: User is redirected to dashboard.
+### Test Cases for Login Functionality
 
-2. **Edge Case: Invalid Password**
-   - Steps: Enter valid username and invalid password, click login.
-   - Expected Result: Error message displayed.
+#### Happy Path
+1. **Test Case ID**: TC_LOGIN_01
+   - **Description**: User logs in with valid credentials.
+   - **Preconditions**: User is registered and has a valid username and password.
+   - **Test Steps**:
+     1. Navigate to the login page.
+     2. Enter valid username.
+     3. Enter valid password.
+     4. Click the login button.
+   - **Expected Result**: User is successfully logged in and redirected to the dashboard.
 
-3. **Edge Case: Empty Username Field**
-   - Steps: Leave username empty, enter password, click login.
-   - Expected Result: Validation error shown.",pass
-Write test cases for password reset functionality,"### Test Cases for Password Reset
+#### Edge Cases
+2. **Test Case ID**: TC_LOGIN_02
+   - **Description**: User attempts to login with invalid username.
+   - **Preconditions**: User is not registered.
+   - **Test Steps**:
+     1. Navigate to the login page.
+     2. Enter an invalid username.
+     3. Enter valid password.
+     4. Click the login button.
+   - **Expected Result**: Error message is displayed stating ""Invalid username or password.""
 
-1. **Happy Path: Valid Reset Request**
-   - Steps: Enter registered email, click reset.
-   - Expected Result: Reset email sent.
+3. **Test Case ID**: TC_LOGIN_03
+   - **Description**: User attempts to login with invalid password.
+   - **Preconditions**: User is registered with a valid username and password.
+   - **Test Steps**:
+     1. Navigate to the login page.
+     2. Enter valid username.
+     3. Enter an invalid password.
+     4. Click the login button.
+   - **Expected Result**: Error message is displayed stating ""Invalid username or password.""
 
-2. **Edge Case: Non-Registered Email**
-   - Steps: Enter email not registered in system.
-   - Expected Result: Error message displayed.
+4. **Test Case ID**: TC_LOGIN_04
+   - **Description**: User leaves the username and password fields empty.
+   - **Preconditions**: None.
+   - **Test Steps**:
+     1. Navigate to the login page.
+     2. Leave the username field empty.
+     3. Leave the password field empty.
+     4. Click the login button.
+   - **Expected Result**: Error message is displayed stating ""Username and password cannot be empty.""
 
-3. **Edge Case: Expired Reset Token**
-   - Steps: Attempt reset with expired token.
-   - Expected Result: Error displayed, reset denied.",pass
-Write an automation script for signup functionality,"### Automation Script: Signup Functionality (Python Selenium)
+5. **Test Case ID**: TC_LOGIN_05
+   - **Description**: User attempts to log in after multiple failed attempts.
+   - **Preconditions**: User has reached the login attempt limit (e.g., 5 failed attempts).
+   - **Test Steps**:
+     1. Navigate to the login page.
+     2. Enter valid username.
+     3. Enter invalid password for 5 consecutive attempts.
+     4. Attempt to login with valid password.
+   - **Expected Result**: Error message is displayed stating ""Your account is locked due to multiple failed attempts. Please try again later.""
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+6. **Test Case ID**: TC_LOGIN_06
+   - **Description**: User tries to log in with expired session.
+   - **Preconditions**: User is already logged in and session timeout is set (e.g., 15 minutes).
+   - **Test Steps**:
+     1. Log in to the application.
+     2. Wait for the session timeout period.
+     3. Attempt to navigate to a different page or refresh the page.
+   - **Expected Result**: User is redirected to the login page with a message stating ""Session expired. Please log in again.""
 
-driver = webdriver.Chrome()
-driver.get('https://example.com/signup')
+7. **Test Case ID**: TC_LOGIN_07
+   - **Description**: User attempts to login with SQL injection as a username.
+   - **Preconditions**: None.
+   - **Test Steps**:
+     1. Navigate to the login page.
+     2. Enter SQL injection code (e.g., `""' OR '1'='1""`).
+     3. Enter valid password.
+     4. Click the login button.
+   - **Expected Result**: The application should not allow the login and should display a security error message, without executing the SQL injection.",pass
+Write an automation script using Selenium with Java for a signup functionality,"### Automation Script: Signup Functionality (Selenium with Java)
 
-driver.find_element(By.ID, 'email').send_keys('newuser@example.com')
-driver.find_element(By.ID, 'password').send_keys('ValidPass123')
-driver.find_element(By.ID, 'submit').click()
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-assert 'Welcome' in driver.page_source
+public class SignupAutomation {
+    public static void main(String[] args) {
+        // Set the path for the WebDriver
+        System.setProperty(""webdriver.chrome.driver"", ""path/to/chromedriver"");
+        WebDriver driver = new ChromeDriver();
 
-driver.quit()",pass
-Write an automation script for logout functionality,"Automate logout.",fail
-Write test cases for search functionality,"Search works.",fail
+        // Happy Path: Successful Signup
+        try {
+            driver.get(""https://example.com/signup"");
+            WebElement username = driver.findElement(By.id(""username""));
+            WebElement email = driver.findElement(By.id(""email""));
+            WebElement password = driver.findElement(By.id(""password""));
+            WebElement signupButton = driver.findElement(By.id(""signupButton""));
+
+            username.sendKeys(""validUser"");
+            email.sendKeys(""valid@example.com"");
+            password.sendKeys(""StrongPassword123"");
+            signupButton.click();
+
+            // Verify successful signup (this will depend on the application specifics)
+            String successMessage = driver.findElement(By.id(""successMessage"")).getText();
+            System.out.println(""Success Message: "" + successMessage);
+        } finally {
+            driver.quit(); // Close the browser regardless of the outcome
+        }
+
+        // Edge Case 1: Submitting with empty fields
+        try {
+            driver = new ChromeDriver();
+            driver.get(""https://example.com/signup"");
+            signupButton = driver.findElement(By.id(""signupButton""));
+            signupButton.click();
+
+            // Verify error message for empty fields
+            String emptyFieldError = driver.findElement(By.id(""errorMessage"")).getText();
+            System.out.println(""Empty Field Error: "" + emptyFieldError);
+        } finally {
+            driver.quit();
+        }
+
+        // Edge Case 2: Submitting with invalid email
+        try {
+            driver = new ChromeDriver();
+            driver.get(""https://example.com/signup"");
+            username.sendKeys(""testUser"");
+            email.sendKeys(""invalidEmailFormat"");
+            password.sendKeys(""ValidPassword123"");
+            signupButton.click();
+
+            // Verify error message for invalid email
+            String invalidEmailError = driver.findElement(By.id(""errorMessage"")).getText();
+            System.out.println(""Invalid Email Error: "" + invalidEmailError);
+        } finally {
+            driver.quit();
+        }
+
+        // Edge Case 3: Submitting with weak password
+        try {
+            driver = new ChromeDriver();
+            driver.get(""https://example.com/signup"");
+            username.sendKeys(""testUser2"");
+            email.sendKeys(""valid@example.com"");
+            password.sendKeys(""123""); // Weak password
+            signupButton.click();
+
+            // Verify error message for weak password
+            String weakPasswordError = driver.findElement(By.id(""errorMessage"")).getText();
+            System.out.println(""Weak Password Error: "" + weakPasswordError);
+        } finally {
+            driver.quit();
+        }
+    }
+}",pass
+Write an automation script for logout functionality,"import org.openqa.selenium.By;",fail
+Write test cases for search functionality,"### Test Cases for Search Functionality
+
+#### Test Case 1: Search
+- **Description**: Validate correct search
+- **Steps**:
+  1. Search
+- **Expected Result**: Results appear.",fail

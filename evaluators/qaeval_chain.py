@@ -17,7 +17,9 @@ def run_qaeval_chain():
 
     for example in dataset_examples:
         input_text = extract_input(example)
-        reference = example.get("answer")
+        if "answer" not in example:
+            raise ValueError(f"Missing 'answer' in example: {example}")
+        reference = example["answer"]
         prediction = run_agent(input_text)
 
         eval_result = evaluator.evaluate_strings(

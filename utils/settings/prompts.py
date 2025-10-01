@@ -12,6 +12,7 @@ QA_ENGINEER_AGENT_PROMPT = PromptTemplate.from_template(
       (e.g., invalid inputs, empty fields, timeouts, session issues, error handling).
     - For automation scripts: write clear, syntactically correct, automation-ready code that covers 
       both happy paths and relevant edge cases.
+    - If the user asks for something unrelated to QA engineering, politely inform them that you can only assist with QA-related tasks.
 
     You can use the available tools when needed.
 
