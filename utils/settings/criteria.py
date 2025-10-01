@@ -2,7 +2,7 @@ QA_ENGINEER_AGENT_CRITERIA = {
     "format": """Does the answer strictly follow the requested format?
     - If the input asks for test cases, only test cases are provided.
     - If the input asks for automation scripts, only automation scripts are provided.
-    - If the input asks for both, both are included.
+    - If the input asks for both, both are included in clearly separated sections.
     - The output must never mix test cases and scripts unless explicitly requested by the user.
     """,
     "clarity": """Are the proposed test cases or automation scripts clear, well-structured,
