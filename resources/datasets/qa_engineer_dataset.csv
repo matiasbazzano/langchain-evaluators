@@ -1,78 +1,78 @@
 input,answer,expected_result
 Write test cases for login functionality,"### Test Cases for Login Functionality
 
-### Test Cases for Login Functionality
-
 #### Happy Path
-1. **Test Case ID**: TC_LOGIN_01
-   - **Description**: User logs in with valid credentials.
-   - **Preconditions**: User is registered and has a valid username and password.
-   - **Test Steps**:
-     1. Navigate to the login page.
-     2. Enter valid username.
-     3. Enter valid password.
-     4. Click the login button.
-   - **Expected Result**: User is successfully logged in and redirected to the dashboard.
+1. **Test Case ID:** TC_LOGIN_001  
+   **Description:** User logs in with valid credentials.  
+   **Precondition:** User must have a registered account.  
+   **Test Steps:**  
+   - Navigate to login page.  
+   - Enter valid username.  
+   - Enter valid password.  
+   - Click on the login button.  
+   **Expected Result:** User is successfully logged in and redirected to the dashboard.
 
 #### Edge Cases
-2. **Test Case ID**: TC_LOGIN_02
-   - **Description**: User attempts to login with invalid username.
-   - **Preconditions**: User is not registered.
-   - **Test Steps**:
-     1. Navigate to the login page.
-     2. Enter an invalid username.
-     3. Enter valid password.
-     4. Click the login button.
-   - **Expected Result**: Error message is displayed stating ""Invalid username or password.""
+2. **Test Case ID:** TC_LOGIN_002  
+   **Description:** User attempts to log in with an invalid username.  
+   **Precondition:** None.  
+   **Test Steps:**  
+   - Navigate to login page.  
+   - Enter invalid username.  
+   - Enter valid password.  
+   - Click on the login button.  
+   **Expected Result:** Error message displayed: ""Invalid username or password.""
 
-3. **Test Case ID**: TC_LOGIN_03
-   - **Description**: User attempts to login with invalid password.
-   - **Preconditions**: User is registered with a valid username and password.
-   - **Test Steps**:
-     1. Navigate to the login page.
-     2. Enter valid username.
-     3. Enter an invalid password.
-     4. Click the login button.
-   - **Expected Result**: Error message is displayed stating ""Invalid username or password.""
+3. **Test Case ID:** TC_LOGIN_003  
+   **Description:** User attempts to log in with an invalid password.  
+   **Precondition:** None.  
+   **Test Steps:**  
+   - Navigate to login page.  
+   - Enter valid username.  
+   - Enter invalid password.  
+   - Click on the login button.  
+   **Expected Result:** Error message displayed: ""Invalid username or password.""
 
-4. **Test Case ID**: TC_LOGIN_04
-   - **Description**: User leaves the username and password fields empty.
-   - **Preconditions**: None.
-   - **Test Steps**:
-     1. Navigate to the login page.
-     2. Leave the username field empty.
-     3. Leave the password field empty.
-     4. Click the login button.
-   - **Expected Result**: Error message is displayed stating ""Username and password cannot be empty.""
+4. **Test Case ID:** TC_LOGIN_004  
+   **Description:** User attempts to log in with empty username and password fields.  
+   **Precondition:** None.  
+   **Test Steps:**  
+   - Navigate to login page.  
+   - Leave username field empty.  
+   - Leave password field empty.  
+   - Click on the login button.  
+   **Expected Result:** Error message displayed: ""Username and password cannot be empty.""
 
-5. **Test Case ID**: TC_LOGIN_05
-   - **Description**: User attempts to log in after multiple failed attempts.
-   - **Preconditions**: User has reached the login attempt limit (e.g., 5 failed attempts).
-   - **Test Steps**:
-     1. Navigate to the login page.
-     2. Enter valid username.
-     3. Enter invalid password for 5 consecutive attempts.
-     4. Attempt to login with valid password.
-   - **Expected Result**: Error message is displayed stating ""Your account is locked due to multiple failed attempts. Please try again later.""
+5. **Test Case ID:** TC_LOGIN_005  
+   **Description:** User attempts to log in with a locked account.  
+   **Precondition:** User's account must be locked.  
+   **Test Steps:**  
+   - Navigate to login page.  
+   - Enter valid username.  
+   - Enter valid password.  
+   - Click on the login button.  
+   **Expected Result:** Error message displayed: ""Your account is locked. Please contact support.""
 
-6. **Test Case ID**: TC_LOGIN_06
-   - **Description**: User tries to log in with expired session.
-   - **Preconditions**: User is already logged in and session timeout is set (e.g., 15 minutes).
-   - **Test Steps**:
-     1. Log in to the application.
-     2. Wait for the session timeout period.
-     3. Attempt to navigate to a different page or refresh the page.
-   - **Expected Result**: User is redirected to the login page with a message stating ""Session expired. Please log in again.""
+6. **Test Case ID:** TC_LOGIN_006  
+   **Description:** User experiences a timeout during login.  
+   **Precondition:** Simulate network latency or server delay.  
+   **Test Steps:**  
+   - Navigate to login page.  
+   - Enter valid username.  
+   - Enter valid password.  
+   - Click on the login button and wait for response.  
+   **Expected Result:** Error message displayed: ""Login request timed out. Please try again.""
 
-7. **Test Case ID**: TC_LOGIN_07
-   - **Description**: User attempts to login with SQL injection as a username.
-   - **Preconditions**: None.
-   - **Test Steps**:
-     1. Navigate to the login page.
-     2. Enter SQL injection code (e.g., `""' OR '1'='1""`).
-     3. Enter valid password.
-     4. Click the login button.
-   - **Expected Result**: The application should not allow the login and should display a security error message, without executing the SQL injection.",pass
+7. **Test Case ID:** TC_LOGIN_007  
+   **Description:** User attempts to log in with an expired session.  
+   **Precondition:** User must be logged in with a session that has expired.  
+   **Test Steps:**  
+   - Navigate to a restricted page (while session is expired).  
+   - The system redirects to the login page.  
+   - Enter valid username.  
+   - Enter valid password.  
+   - Click on the login button.  
+   **Expected Result:** Error message displayed: ""Your session has expired. Please log in again.""",pass
 Write an automation script using Selenium with Java for a signup functionality,"### Automation Script: Signup Functionality (Selenium with Java)
 
 import org.openqa.selenium.By;
