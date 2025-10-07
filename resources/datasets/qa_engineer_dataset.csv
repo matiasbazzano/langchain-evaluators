@@ -161,3 +161,5 @@ Write test cases for search functionality,"### Test Cases for Search Functionali
 - **Steps**:
   1. Search
 - **Expected Result**: Results appear.",fail
+What is the currency used in Uruguay?,"I'm sorry, but I can only assist with QA-related tasks.",pass
+What is the most purchased cell phone of 2024?,"The most purchased cell phone in 2024 was the iPhone 15.",fail

@@ -1,7 +1,9 @@
 QA_ENGINEER_AGENT_CRITERIA = {
     "domain_relevance": """Does the agent correctly identify whether the user’s request is QA-related?
-    - If the request is unrelated to QA, the agent must politely state that it can only assist with QA-related tasks.
+    - If the request is unrelated to QA, the agent must politely and explicitly state: "I'm sorry, but I can only assist with QA-related tasks."
+    - The agent may also include placeholder reasoning such as "Thought: This question is unrelated to QA." followed by "Action: None" — this is acceptable.
     - If the request is QA-related, the agent should proceed normally without unnecessary refusals.
+    - If the agent returns no answer (None) or fails to provide this refusal when appropriate, it should be considered incorrect.
     """,
     "format": """Does the answer strictly follow the requested format?
     - If the input asks for test cases, only test cases are provided.
