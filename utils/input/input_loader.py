@@ -52,6 +52,7 @@ def load_inputs(evaluator_name: str):
                             dataset_examples.append(normalized)
             elif extension == ".csv":
                 df = pd.read_csv(path)
+                df.columns = df.columns.str.strip().str.lower()
                 dataset_examples = [
                     {
                         "input": {"input": row["input"]},
